@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cmake",
+            "label": "CMake: build",
+            "command": "build",
+            "targets": [
+                "all"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "CMake template build task"
+        },
+        {
+            "type": "shell",
+            "label": "flash",
+            "group": "build",
+            "dependsOn": "CMake: build",
+            "command": "openocd -f interface/wch-riscv.cfg -c \"program ${input:workspaceFolderForwardSlash}/build/${workspaceFolderBasename}.hex verify reset exit\"",
+        }
+    ],
+    "inputs": [
+        {
+          "id": "workspaceFolderForwardSlash",
+          "type": "command",
+          "command": "extension.commandvariable.transform",
+          "args": {
+            "text": "${workspaceFolder}",
+            "find": "\\\\",
+            "replace": "/",
+            "flags": "g"
+          }
+        }
+      ]
+}
